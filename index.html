@@ -157,13 +157,13 @@
         customData.performance_rating.push("NA");
         customData.probe1_rt.push("NA");
         customData.probe2_rt.push("NA");
-        customData.nce_rating.push("NA");
+        customData.confidence_rating.push("NA");
         //customData.probe_text.push("NA");
         customData.pause_time.push("NA");
       }
       function saveThoughtProbeTrial(confidence) {
         trialNum++;
-        //let probeText = (tempPerformance > 3) ? "On Task" : "Confident";
+        let probeText = (tempPerformance > 3) ? "On Task" : "Confident";
         customData.subject.push(subjectID);
         customData.trial.push(trialNum);
         customData.task.push("thought_probe");
