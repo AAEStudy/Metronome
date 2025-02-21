@@ -121,11 +121,11 @@
       let practiceLastRT = null;
       let mainLastRT = null;
 
-      // ---------------- Countdown Functions ----------------
+      // ----------------  Functions ----------------
       function add_countdown(n, l=1300) {
         return {
           type: jsPsychHtmlKeyboardResponse,
-          stimulus: "<p>" + n + "</p>",
+          stimulus: `<p style="font-size: 18pt;">${n}</p>`,
           response_ends_trial: false,
           trial_duration: l
         };
