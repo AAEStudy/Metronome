@@ -30,9 +30,9 @@
     const urlParams = new URLSearchParams(queryString);
 
        // Extract the subjectId parameter (make sure the parameter name matches what Qualtrics sends)
-    // const subjectID = urlParams.get('subjectID');
+    const subjectID = urlParams.get('subjectID');
     //e.g., to manually set if just testing let subjectID = 'subject2'; 
-    let subjectID = 'subject2';
+    //let subjectID = 'subject2';
 
     function cleanupJsPsych() {
       // Remove the jsPsych instance and clear the experiment container.
