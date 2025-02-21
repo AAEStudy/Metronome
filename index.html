@@ -328,7 +328,7 @@
       };
       let practice_prompt = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: "<p>The practice trials are now over.<br><br>If you would like to review the instructions and redo the practice trials, press <strong>[Left Arrow]</strong>.<br><br>If you are ready to begin the main experiment, press <strong>[Right Arrow]</strong>.</p>",
+        stimulus: "<p>The practice trials are now over.<br><br>If you would like to redo the practice trials, press <strong>[Left Arrow]</strong>.<br><br>If you are ready to begin the main experiment, press <strong>[Right Arrow]</strong>.</p>",
         choices: ["arrowleft", "arrowright"],
         on_finish: function(data) {
           if(data.response === "arrowleft") {
