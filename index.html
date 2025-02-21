@@ -30,8 +30,9 @@
     const urlParams = new URLSearchParams(queryString);
 
        // Extract the subjectId parameter (make sure the parameter name matches what Qualtrics sends)
-    const subjectID = urlParams.get('subjectID');
+    // const subjectID = urlParams.get('subjectID');
     //e.g., to manually set if just testing let subjectID = 'subject2'; 
+    let subjectID = 'subject2';
 
     function cleanupJsPsych() {
       // Remove the jsPsych instance and clear the experiment container.
@@ -146,11 +147,11 @@
       }
 
       // ---------------- Data Saving Functions ----------------
-      function saveTappingTrial(score) {
+      function saveTappingTrial(score, taskType = "metronome") {
         trialNum++;
         customData.subject.push(subjectID);
         customData.trial.push(trialNum);
-        customData.task.push("metronome");
+        customData.task.push(taskType); // will be "practice trial" or "metronome"
         customData.trial_num.push(trialNum);
         customData.RT_from_metronome.push(score);
         customData.omission.push(score === "" ? "TRUE" : "FALSE");
@@ -279,11 +280,11 @@
             return;
           }
           if(practiceLastRT === null) {
-            saveTappingTrial("");
+            saveTappingTrial("", "practice trial");
             practiceConsecutiveMisses++;
           } else {
             let score = practiceLastRT - lag_time;
-            saveTappingTrial(score);
+            saveTappingTrial(score, "practice trial");
             practiceConsecutiveMisses = 0;
           }
         }
@@ -355,8 +356,8 @@
                   <!-- Wrap the question text in the same container -->
                   <div style="display: inline-block; width: 1050px; text-align: left;">
                     <p style="font-size: 20pt; margin: 0;">
-                      1. How on task were you just before this screen appeared? 
-                    </p></p></p></p>
+                      1. How on task were you just before this screen appeared?<br><br>
+                    </p>
                   </div>
                   <!-- The response options container -->
                   <div style="display: inline-block; width: 1050px;">
@@ -379,7 +380,8 @@
                           <div style="width: 150px; text-align: center; font-size:20pt;">[6]</div>
                       </div>
                       <div style="display: flex; justify-content: center; margin-top: 45px;">
-                          <div style="width: 600px; text-align: center; font-size:12pt;">Press a key (1–6) for your response.</div>
+                          <div style="width: 600px; text-align: center; font-size:16pt;"><br><br>
+                            Choose the response that best describes your level of task focus just before we asked. Press a key (1–6) for your response.</div>
                       </div>
                   </div>
                 </div>`,
@@ -398,8 +400,8 @@
                   <!-- Wrap the question text in the same container -->
                   <div style="display: inline-block; white-space: nowrap; width: 1050px; text-align: left;">
                     <p style="font-size: 20pt; margin: 0;">
-                      2. How confident are you the task focus rating you just provided is accurate?
-                    </p></p></p></p>
+                      2. How confident are you in the task focus rating you just provided?<br><br>
+                    </p>
                   </div>
                   <!-- The response options container -->
                   <div style="display: inline-block; width: 1050px;">
@@ -422,7 +424,8 @@
                           <div style="width: 150px; text-align: center; font-size:20pt;">[6]</div>
                       </div>
                       <div style="display: flex; justify-content: center; margin-top: 45px;">
-                          <div style="width: 600px; text-align: center; font-size:12pt;">Press a key (1–6) for your response.</div>
+                          <div style="width: 600px; text-align: center; font-size:16pt;"><br><br>
+                            Indicate how certain you are your prior response accurately reflects how focused you were. Press a key (1–6) for your response.</div>
                       </div>
                   </div>
                 </div>`,
@@ -435,7 +438,7 @@
           },
           {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: `<p style="font-size:24pt; text-align:center;">Press the spacebar to continue.</p>`,
+            stimulus: `<p style="font-size:24pt; text-align:center;">Press the spacebar to continue and resume clicking along to the metronome.</p>`,
             choices: [" "]
           },
           {
@@ -621,6 +624,7 @@
       // 3. Practice node
       timeline.push(practice_node);
       // 4. Countdown before main
+      timeline.push(add_countdown_pad());
       timeline = timeline.concat(countdown_main);
       // 5. Main MRT block
       timeline = timeline.concat(mrt_main);
