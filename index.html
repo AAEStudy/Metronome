@@ -560,7 +560,7 @@
         return adjustedJitters.map(j => baseTime + j);
       }
       let mrt_main = [];
-      const numBlocks = 1;  // For quick testing; change to desired value. change back to 8
+      const numBlocks = 8;  // For quick testing; change to desired value. 8 is about 5.2 minutes in main trials
       const baseTime = 40;  
       const jitterRange = 15;
       const intervals = generateJitteredIntervals(numBlocks, baseTime, jitterRange);
