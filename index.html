@@ -90,23 +90,23 @@
       `;
       document.body.innerHTML = `<div id="experiment-container"></div>`;
       
+      
       // Add the listener using the named function
       window.addEventListener('beforeunload', handleBeforeUnload);
       var jsPsych = initJsPsych({
         on_finish: function() {
           // Add a delay before redirecting.
           setTimeout(function() {
-              if (numericID) {
-                // If numericID exists (subjectID started with "ID"), append it to the URL.
-                window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g?id=" + numericID);
-              } else {
-                // Otherwise (e.g., subjectID started with "UID" or was randomly generated), redirect back to the regular Qualtrics link.
-                window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g");
-              }
-            }, 500);
-          }
+            if (numericID) {
+              // If numericID exists (subjectID started with "ID"), append it to the URL.
+              window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g?id=" + numericID);
+            } else {
+              window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g");
+            }
+          }, 500);
         }
       });
+
 
 
       // ---------------- Global Variables & Data Storage ----------------
