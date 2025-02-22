@@ -31,11 +31,13 @@
 
        // Extract the subjectId parameter (make sure the parameter name matches what Qualtrics sends)
     let subjectID = urlParams.get('subjectID');
+    let numericID; // declare numericID in the outer scope
     if (!subjectID) {
          // Generate a random 4-digit number
         subjectID = 'random' + Math.floor(10000 + Math.random() * 90000);
       } else {
         console.log("Subject ID:", subjectID);
+        numericID = subjectID.slice(2); //get the numeric part of the id only for redirecting later
       }
     //e.g., to manually set if just testing let subjectID = 'subject2'; 
     //let subjectID = 'subject2';
@@ -87,12 +89,17 @@
       
       // Add the listener using the named function
       window.addEventListener('beforeunload', handleBeforeUnload);
-      
       var jsPsych = initJsPsych({
         on_finish: function() {
           // Add a delay before redirecting.
           setTimeout(function() {
-            window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g");
+            if (!numericID) {
+                window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g");
+            } else {
+              console.log("Subject ID:", subjectID);
+                // Redirect back to Qualtrics with the numeric Sona ID as the 'id' parameter
+              window.location.replace("https://usf.az1.qualtrics.com/jfe/form/SV_eVSsVNyTwJPVr7g?id=" + numericID);
+            }
           }, 500);
         }
       });
